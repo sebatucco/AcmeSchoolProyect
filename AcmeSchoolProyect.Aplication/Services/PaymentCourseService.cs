@@ -36,7 +36,7 @@ namespace AcmeSchoolProyect.Aplication.Services
             if (student == null)
                 throw new InvalidOperationException("Alumno no encontrado");
 
-            var payment = new PaymentCourse { StudentId = studentId, AmountPaid = true, PaymentDate = DateTime.Now };
+            var payment = new PaymentCourse { StudentId = studentId, Paid = true, PaymentDate = DateTime.Now };
             return _paymentCourseRepository.Add(payment);
 
         }

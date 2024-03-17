@@ -10,7 +10,7 @@ namespace AcmeSchoolProyect.Core.Entites
     public class PaymentCourse:Entity
     {
         public Guid StudentId { get; set; }
-        public bool AmountPaid { get; set; } = false;
+        public bool Paid { get; set; } = false;
         public DateTime PaymentDate { get; set; }
         
     }
