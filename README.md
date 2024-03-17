@@ -2,5 +2,6 @@ Entidades del proyecto
 
 
 
-![image](https://github.com/sebatucco/AcmeSchoolProyect/assets/4566043/fd60a75c-4687-45bf-97ab-5364efb1afdf)
+![image](https://github.com/sebatucco/AcmeSchoolProyect/assets/4566043/d9295233-d209-445b-871d-3bd49d9b3016)
+
 
