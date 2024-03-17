@@ -1,4 +1,4 @@
-Acme School Proyect :Representacion de las entidades que integran el proyecto y la relacion que existe entre ellas. 
+Acme School Proyect: Representacion de las entidades que integran el proyecto y la relacion que existe entre ellas. 
 
 
 
