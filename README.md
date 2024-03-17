@@ -2,6 +2,7 @@ Acme School Proyect: Representacion de las entidades que integran el proyecto y 
 
 
 
-![image](https://github.com/sebatucco/AcmeSchoolProyect/assets/4566043/d9295233-d209-445b-871d-3bd49d9b3016)
+![image](https://github.com/sebatucco/AcmeSchoolProyect/assets/4566043/d38164cb-d485-460e-9c15-b80f1bf66abd)
+
 
 
