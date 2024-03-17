@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace AcmeSchoolProyect.Core.Entites
 {
-    public class Student:IEntity
+    public class Student:Entity
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
      

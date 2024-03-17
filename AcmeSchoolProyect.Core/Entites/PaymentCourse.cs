@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace AcmeSchoolProyect.Core.Entites
 {
-    public class PaymentCourse:IEntity
+    public class PaymentCourse:Entity
     {
-        public Guid Id { get; set; }
         public Guid StudentId { get; set; }
         public bool AmountPaid { get; set; } = false;
         public DateTime PaymentDate { get; set; }

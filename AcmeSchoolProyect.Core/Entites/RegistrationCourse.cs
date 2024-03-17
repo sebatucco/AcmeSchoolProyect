@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace AcmeSchoolProyect.Core.Entites
 {
-    public class RegistrationCourse:IEntity
+    public class RegistrationCourse:Entity
     {
-        public Guid Id { get; set; }
         public Guid PymentCourseId { get; set; }
         public Guid CourseId { get; set; }
         public DateTime RegistrationDate { get; set; }
