@@ -18,26 +18,62 @@ namespace AcmeSchoolProyect.Aplication.Services
         }
         public IEnumerable<Student> GetAllStudents()
         {
-            return _studentRepository.GetAll();
+            try
+            {
+                return _studentRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"Error GetAllStudents: {e.Message}");
+            }
+           
         }
 
         public Student GetByIdStudent(Guid id)
         {
-            return _studentRepository.GetById(id);
+            try
+            {
+                return _studentRepository.GetById(id);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"Error GetByIdStudent: {e.Message}");
+            }
+           
         }
 
         public Guid RegisterStudent(string name, int age)
         {
-            if (age < 18)
-                throw new InvalidOperationException("Solo mayores de edad pueden registrar");
-            var student = new Student { Name = name, Age = age };
-            return _studentRepository.Add(student);
+            try
+            {
+                if (age < 18)
+                    throw new Exception("Solo mayores de edad pueden registrar");
+                var student = new Student { Name = name, Age = age };
+                return _studentRepository.Add(student);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"Error RegisterStudent: {e.Message}");
+            }
+           
            
         }
 
         public void RemoveStudent(Student student)
         {
-            _studentRepository.Remove(student);
+            try
+            {
+                _studentRepository.Remove(student);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"Error RemoveStudent: {e.Message}");
+            }
+           
         }
     }
 }

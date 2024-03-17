@@ -14,32 +14,68 @@ namespace AcmeSchoolProyect.Aplication.Services
         private readonly ICourseRepository _courseRepository;
         public CourseService(ICourseRepository courseRepository)
         {
-            _courseRepository = courseRepository;  
+            _courseRepository = courseRepository;
         }
 
         public IEnumerable<Course> GetAllCourses()
         {
-            return _courseRepository.GetAll();
+            try
+            {
+                return _courseRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"Error GetAllCourses: {e.Message}");
+            }
+
         }
 
         public Course GetByIdCourse(Guid id)
         {
-            return _courseRepository.GetById(id);
+            try
+            {
+                return _courseRepository.GetById(id);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"Error GetByIdCourse: {e.Message}");
+            }
+
         }
 
         public Guid RegisterCourse(string name, int courseCost, DateTime startDateCourse, DateTime endDateCourse)
         {
-            if (endDateCourse < startDateCourse)
-                throw new InvalidOperationException("Error en fechas de curso");
+            try
+            {
+                if (endDateCourse < startDateCourse)
+                    throw new Exception("Error en fechas de curso");
 
-            var course = new Course { Name = name, CourseCost = courseCost, StartDateCourse = startDateCourse, EndDateCourse= endDateCourse};
-            return _courseRepository.Add(course);
+                var course = new Course { Name = name, CourseCost = courseCost, StartDateCourse = startDateCourse, EndDateCourse = endDateCourse };
+                return _courseRepository.Add(course);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"Error RegisterCourse: {e.Message}");
+            }
+
 
         }
 
         public void RemoveCourse(Course course)
         {
-            _courseRepository.Remove(course);
+            try
+            {
+                _courseRepository.Remove(course);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"Error RemoveCourse: {e.Message}");
+            }
+
         }
     }
 }

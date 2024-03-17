@@ -23,35 +23,72 @@ namespace AcmeSchoolProyect.Aplication.Services
 
         public IEnumerable<PaymentCourse> GetAllPaymentCourses()
         {
-            return _paymentCourseRepository.GetAll();
+            try
+            {
+                return _paymentCourseRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"Error GetAllPaymentCourses: {e.Message}");
+            }
+
         }
 
         public PaymentCourse GetByIdPaymentCourse(Guid id)
         {
-            return _paymentCourseRepository.GetById(id);
+            try
+            {
+                return _paymentCourseRepository.GetById(id);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"Error GetByIdPaymentCourse: {e.Message}");
+            }
+
         }
 
 
         public Guid RegisterPaymentCourse(Guid studentId, Guid courseId, int pay)
         {
-            var student = _studentService.GetByIdStudent(studentId);
-            var course = _courseService.GetByIdCourse(courseId);
+            try
+            {
+                var student = _studentService.GetByIdStudent(studentId);
+                var course = _courseService.GetByIdCourse(courseId);
 
-            if (student == null)
-                throw new InvalidOperationException("Alumno no encontrado");
-            if (course == null)
-                throw new InvalidOperationException("Curso no existe");
-            if(!course.CourseCost.Equals(pay))
-                throw new InvalidOperationException("No coincide con valor del curso");
+                if (student == null)
+                    throw new Exception("Alumno no encontrado");
+                if (course == null)
+                    throw new Exception("Curso no existe");
+                if (!course.CourseCost.Equals(pay))
+                    throw new Exception("No coincide con valor del curso");
 
-            var payment = new PaymentCourse { StudentId = studentId, CourseId = courseId, Pay = pay, Paid = true, PaymentDate = DateTime.Now };
-            return _paymentCourseRepository.Add(payment);
+                var payment = new PaymentCourse { StudentId = studentId, CourseId = courseId, Pay = pay, Paid = true, PaymentDate = DateTime.Now };
+                return _paymentCourseRepository.Add(payment);
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"Error RegisterPaymentCourse: {e.Message}");
+            }
+
 
         }
 
         public void RemovePaymentCourse(PaymentCourse paymentCourse)
         {
-            _paymentCourseRepository.Remove(paymentCourse);
+            try
+            {
+                _paymentCourseRepository.Remove(paymentCourse);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception($"Error RemovePaymentCourse: {e.Message}");
+            }
+
         }
 
     }
