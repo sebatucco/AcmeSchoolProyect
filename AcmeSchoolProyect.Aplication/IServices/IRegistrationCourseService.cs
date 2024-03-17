@@ -10,9 +10,9 @@ namespace AcmeSchoolProyect.Aplication.IServices
 {
     public interface IRegistrationCourseService
     {
-        Guid RegisterCourse(Guid studentId, Guid courseId);
+        Guid RegisterCourse(Guid studentId);
         IEnumerable<RegistrationCourse> GetAllRegisterCourses();
-        void RemoveRegisterCourse(RegistrationCourse course);
+        void RemoveRegisterCourse(RegistrationCourse registrationCourse);
         RegistrationCourse GetByIdRegisterCourse(Guid id);
         List<StudentCourseDTO> GetStudentCoursesByDate(DateTime startDate, DateTime endTime);
     }

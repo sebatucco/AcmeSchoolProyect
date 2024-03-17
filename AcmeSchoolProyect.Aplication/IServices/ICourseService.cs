@@ -9,7 +9,7 @@ namespace AcmeSchoolProyect.Aplication.IServices
 {
     public interface ICourseService
     {
-        Guid RegisterCourse(string name);
+        Guid RegisterCourse(string name, int courseCost, DateTime startDateCourse, DateTime endDateCourse);
         IEnumerable<Course> GetAllCourses();
         void RemoveCourse(Course course);
        Course GetByIdCourse(Guid id);

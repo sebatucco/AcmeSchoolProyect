@@ -27,9 +27,12 @@ namespace AcmeSchoolProyect.Aplication.Services
             return _courseRepository.GetById(id);
         }
 
-        public Guid RegisterCourse(string name)
+        public Guid RegisterCourse(string name, int courseCost, DateTime startDateCourse, DateTime endDateCourse)
         {
-            var course = new Course { Name = name};
+            if (endDateCourse < startDateCourse)
+                throw new InvalidOperationException("Error en fechas de curso");
+
+            var course = new Course { Name = name, CourseCost = courseCost, StartDateCourse = startDateCourse, EndDateCourse= endDateCourse};
             return _courseRepository.Add(course);
 
         }

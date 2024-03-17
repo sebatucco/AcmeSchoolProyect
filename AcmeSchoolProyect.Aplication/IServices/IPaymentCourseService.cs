@@ -9,7 +9,7 @@ namespace AcmeSchoolProyect.Aplication.IServices
 {
     public interface IPaymentCourseService
     {
-        Guid RegisterPaymentCourse(Guid studentId);
+        Guid RegisterPaymentCourse(Guid studentId,  Guid courseId, int pay);
         IEnumerable<PaymentCourse> GetAllPaymentCourses();
         void RemovePaymentCourse(PaymentCourse paymentCourse);
         PaymentCourse GetByIdPaymentCourse(Guid id);

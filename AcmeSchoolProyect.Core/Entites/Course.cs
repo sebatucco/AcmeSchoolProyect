@@ -10,6 +10,10 @@ namespace AcmeSchoolProyect.Core.Entites
     public class Course:Entity
     {
         public string Name { get; set; }
+        public int CourseCost { get; set; }
+        public DateTime StartDateCourse { get; set; }
+        public DateTime EndDateCourse { get; set; }
+
        
     }
 }

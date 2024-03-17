@@ -35,26 +35,26 @@ namespace AcmeSchoolProyect.Aplication.Services
             return _registrarionCourseRepository.GetById(id);
         }
 
-        public Guid RegisterCourse(Guid studentId, Guid courseId)
+        public Guid RegisterCourse(Guid studentId)
         {
             var student = _studentService.GetByIdStudent(studentId);
-            var course = _courseService.GetByIdCourse(courseId);
-            var paymentCourse = _paymentCourseService.GetAllPaymentCourses().Where(x => x.StudentId == student.Id).FirstOrDefault();
+            var paymentCourse = _paymentCourseService.GetAllPaymentCourses().Where(x => x.StudentId == student.Id && x.Paid == true).FirstOrDefault();
+            var course = _courseService.GetByIdCourse(paymentCourse.CourseId);
 
             if (student == null)
                 throw new InvalidOperationException("Alumno no existe");
             if (course == null)
-                throw new InvalidOperationException("Alumno no existe");
+                throw new InvalidOperationException("Curso no existe");
             if (paymentCourse == null)
-                throw new InvalidOperationException("Alumno sin pago");
+                throw new InvalidOperationException("No puede realizar la inscripcion");
 
-            var registrationCourse = new RegistrationCourse { PymentCourseId = paymentCourse.Id, CourseId = course.Id, RegistrationDate = DateTime.Now };
+            var registrationCourse = new RegistrationCourse { PymentCourseId = paymentCourse.Id, RegistrationDate = DateTime.Now };
             return _registrarionCourseRepository.Add(registrationCourse);
         }
 
-        public void RemoveRegisterCourse(RegistrationCourse course)
+        public void RemoveRegisterCourse(RegistrationCourse registrationCourse)
         {
-            _registrarionCourseRepository.Remove(course);
+            _registrarionCourseRepository.Remove(registrationCourse);
         }
 
         public List<StudentCourseDTO> GetStudentCoursesByDate(DateTime startDate, DateTime endDate)
@@ -69,7 +69,7 @@ namespace AcmeSchoolProyect.Aplication.Services
 
             var registrationCourses = _registrarionCourseRepository.GetAll().Where(x => x.RegistrationDate >= startDate && x.RegistrationDate <= endDate);
 
-            var studentCourses = paymentCourses.Join(registrationCourses, x => x.Id, y => y.PymentCourseId, (x, y) => new { IdStuden = x.StudentId, IdCourse = y.CourseId });
+            var studentCourses = paymentCourses.Join(registrationCourses, x => x.Id, y => y.PymentCourseId, (x, y) => new { IdStuden = x.StudentId, IdCourse = x.CourseId });
 
             var nameStudentCourses = studentCourses.Join(students, studentCourse => studentCourse.IdStuden, student => student.Id, (studentCourse, student) => new { studentCourse, student }).
                                       Join(courses, x => x.studentCourse.IdCourse, course => course.Id, (x, course) => new { StudentName = x.student.Name, CourseName = course.Name }).ToList();

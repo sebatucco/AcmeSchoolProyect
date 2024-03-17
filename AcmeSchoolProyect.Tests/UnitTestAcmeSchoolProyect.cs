@@ -43,7 +43,7 @@ namespace AcmeSchoolProyect.Tests
             string name = "Daniela";
             int age = 20;
 
-            var studentId =_studentService.RegisterStudent(name, age);
+            var studentId = _studentService.RegisterStudent(name, age);
             Assert.NotEqual(Guid.Empty, studentId);
         }
 
@@ -66,7 +66,7 @@ namespace AcmeSchoolProyect.Tests
         {
             string name = "Daniela";
             int age = 20;
-            var studentId =_studentService.RegisterStudent(name, age);
+            var studentId = _studentService.RegisterStudent(name, age);
             var student = _studentService.GetByIdStudent(studentId);
             Assert.Equal(studentId, student.Id);
         }
@@ -90,19 +90,27 @@ namespace AcmeSchoolProyect.Tests
         public void AddCourse()
         {
             string name = "Informatica";
-
-            var CourseId = _courseService.RegisterCourse(name);
-
-            Assert.NotEqual(Guid.Empty, CourseId);
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            var courseId = _courseService.RegisterCourse(name, courseCost, startDateCourse, endDateCourse);
+            Assert.NotEqual(Guid.Empty, courseId);
         }
 
         [Fact]
         public void GetAllCourse()
         {
             string name = "Informatica";
-            _courseService.RegisterCourse(name);
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            _courseService.RegisterCourse(name, courseCost, startDateCourse, endDateCourse);
+
             name = "Redes";
-            _courseService.RegisterCourse(name);
+            courseCost = 10;
+            startDateCourse = DateTime.Now;
+            endDateCourse = DateTime.Now.AddMonths(3);
+            _courseService.RegisterCourse(name, courseCost, startDateCourse, endDateCourse);
 
             var courses = _courseService.GetAllCourses();
             Assert.NotNull(courses);
@@ -113,7 +121,10 @@ namespace AcmeSchoolProyect.Tests
         public void GetCourseById()
         {
             string name = "Informatica";
-            var courseId = _courseService.RegisterCourse(name);
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            var courseId = _courseService.RegisterCourse(name, courseCost, startDateCourse, endDateCourse);
             var course = _courseService.GetByIdCourse(courseId);
             Assert.Equal(courseId, course.Id);
         }
@@ -122,7 +133,10 @@ namespace AcmeSchoolProyect.Tests
         public void RemoveCourse()
         {
             string name = "Informatica";
-            var courseId = _courseService.RegisterCourse(name);
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            var courseId = _courseService.RegisterCourse(name, courseCost, startDateCourse, endDateCourse);
             var course = _courseService.GetByIdCourse(courseId);
             _courseService.RemoveCourse(course);
             var courses = _courseService.GetAllCourses();
@@ -136,9 +150,16 @@ namespace AcmeSchoolProyect.Tests
         {
             string name = "Daniela";
             int age = 20;
-
             var studentId = _studentService.RegisterStudent(name, age);
-            var paymentCourseId = _paymentCourseService.RegisterPaymentCourse(studentId);
+
+            string nameCourse = "Informatica";
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            var courseId = _courseService.RegisterCourse(nameCourse, courseCost, startDateCourse, endDateCourse);
+
+            int pay = 10;
+            var paymentCourseId = _paymentCourseService.RegisterPaymentCourse(studentId, courseId, pay);
             Assert.NotEqual(Guid.Empty, paymentCourseId);
         }
 
@@ -147,14 +168,30 @@ namespace AcmeSchoolProyect.Tests
         {
             string name = "Daniela";
             int age = 20;
-            var studentId =_studentService.RegisterStudent(name, age);
-            _paymentCourseService.RegisterPaymentCourse(studentId);
+            var studentId = _studentService.RegisterStudent(name, age);
+
+            string nameCourse = "Informatica";
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            var courseId = _courseService.RegisterCourse(nameCourse, courseCost, startDateCourse, endDateCourse);
+
+            int pay = 10;
+            _paymentCourseService.RegisterPaymentCourse(studentId, courseId, pay);
 
 
             name = "Emilse";
             age = 19;
             studentId = _studentService.RegisterStudent(name, age);
-            _paymentCourseService.RegisterPaymentCourse(studentId);
+
+            nameCourse = "Redes";
+            courseCost = 20;
+            startDateCourse = DateTime.Now;
+            endDateCourse = DateTime.Now.AddMonths(3);
+            courseId = _courseService.RegisterCourse(nameCourse, courseCost, startDateCourse, endDateCourse);
+
+            pay = 20;
+            _paymentCourseService.RegisterPaymentCourse(studentId, courseId, pay);
 
             var paymentCourses = _paymentCourseService.GetAllPaymentCourses();
             Assert.NotNull(paymentCourses);
@@ -166,9 +203,17 @@ namespace AcmeSchoolProyect.Tests
         {
             string name = "Daniela";
             int age = 20;
-
             var studentId = _studentService.RegisterStudent(name, age);
-            var paymentCourseId = _paymentCourseService.RegisterPaymentCourse(studentId);
+
+            string nameCourse = "Informatica";
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            var courseId = _courseService.RegisterCourse(nameCourse, courseCost, startDateCourse, endDateCourse);
+
+            int pay = 10;
+            var paymentCourseId = _paymentCourseService.RegisterPaymentCourse(studentId, courseId, pay);
+
             var paymentCourse = _paymentCourseService.GetByIdPaymentCourse(paymentCourseId);
             Assert.Equal(paymentCourseId, paymentCourse.Id);
         }
@@ -179,7 +224,13 @@ namespace AcmeSchoolProyect.Tests
             string name = "Daniela";
             int age = 20;
             var studentId = _studentService.RegisterStudent(name, age);
-            var paymentCourseId = _paymentCourseService.RegisterPaymentCourse(studentId);
+
+            string nameCourse = "Informatica";
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            var paymentCourseId = _courseService.RegisterCourse(nameCourse, courseCost, startDateCourse, endDateCourse);
+
             var paymentCourse = _paymentCourseService.GetByIdPaymentCourse(paymentCourseId);
             _paymentCourseService.RemovePaymentCourse(paymentCourse);
             var paymentCourses = _paymentCourseService.GetAllPaymentCourses();
@@ -194,10 +245,16 @@ namespace AcmeSchoolProyect.Tests
             string nameStudent = "Daniela";
             int age = 20;
             var studentId = _studentService.RegisterStudent(nameStudent, age);
+
             string nameCourse = "Informatica";
-            var courseId = _courseService.RegisterCourse(nameCourse);
-            _paymentCourseService.RegisterPaymentCourse(studentId);
-            var registrationCourseId = _registratrionCourseService.RegisterCourse(studentId, courseId);
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            var courseId = _courseService.RegisterCourse(nameCourse, courseCost, startDateCourse, endDateCourse);
+
+            int pay = 10;
+            _paymentCourseService.RegisterPaymentCourse(studentId, courseId, pay);
+            var registrationCourseId = _registratrionCourseService.RegisterCourse(studentId);
             Assert.NotEqual(Guid.Empty, registrationCourseId);
         }
 
@@ -210,18 +267,31 @@ namespace AcmeSchoolProyect.Tests
             string nameStudent = "Daniela";
             int age = 20;
             var studentId = _studentService.RegisterStudent(nameStudent, age);
+
             string nameCourse = "Informatica";
-            var courseId = _courseService.RegisterCourse(nameCourse);
-            _paymentCourseService.RegisterPaymentCourse(studentId);
-            _registratrionCourseService.RegisterCourse(studentId, courseId);
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            var courseId = _courseService.RegisterCourse(nameCourse, courseCost, startDateCourse, endDateCourse);
+
+            int pay = 10;
+            var paymentCourseId = _paymentCourseService.RegisterPaymentCourse(studentId, courseId, pay);
+            _registratrionCourseService.RegisterCourse(studentId);
 
             nameStudent = "Emilse";
             age = 19;
             studentId = _studentService.RegisterStudent(nameStudent, age);
+
             nameCourse = "Redes";
-            courseId = _courseService.RegisterCourse(nameCourse);
-            _paymentCourseService.RegisterPaymentCourse(studentId);
-            _registratrionCourseService.RegisterCourse(studentId, courseId);
+            courseCost = 20;
+            startDateCourse = DateTime.Now;
+            endDateCourse = DateTime.Now.AddMonths(3);
+            courseId = _courseService.RegisterCourse(nameCourse, courseCost, startDateCourse, endDateCourse);
+
+            pay = 20;
+
+            paymentCourseId = _paymentCourseService.RegisterPaymentCourse(studentId, courseId, pay);
+            _registratrionCourseService.RegisterCourse(studentId);
 
             var studentCourses = _registratrionCourseService.GetStudentCoursesByDate(startDate, endDate);
             Assert.NotNull(studentCourses);
@@ -234,18 +304,30 @@ namespace AcmeSchoolProyect.Tests
             string nameStudent = "Daniela";
             int age = 20;
             var studentId = _studentService.RegisterStudent(nameStudent, age);
+
             string nameCourse = "Informatica";
-            var courseId = _courseService.RegisterCourse(nameCourse);
-            _paymentCourseService.RegisterPaymentCourse(studentId);
-            _registratrionCourseService.RegisterCourse(studentId, courseId);
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            var courseId = _courseService.RegisterCourse(nameCourse, courseCost, startDateCourse, endDateCourse);
+
+            int pay = 10;
+            var paymentCourseId = _paymentCourseService.RegisterPaymentCourse(studentId, courseId, pay);
+            _registratrionCourseService.RegisterCourse(studentId);
 
             nameStudent = "Emilse";
             age = 19;
             studentId = _studentService.RegisterStudent(nameStudent, age);
             nameCourse = "Redes";
-            courseId = _courseService.RegisterCourse(nameCourse);
-            _paymentCourseService.RegisterPaymentCourse(studentId);
-            _registratrionCourseService.RegisterCourse(studentId, courseId);
+            courseCost = 20;
+            startDateCourse = DateTime.Now;
+            endDateCourse = DateTime.Now.AddMonths(3);
+            courseId = _courseService.RegisterCourse(nameCourse, courseCost, startDateCourse, endDateCourse);
+
+            pay = 20;
+
+            _paymentCourseService.RegisterPaymentCourse(studentId, courseId, pay);
+            _registratrionCourseService.RegisterCourse(studentId);
 
             var studentCourses = _registratrionCourseService.GetAllRegisterCourses();
             Assert.NotNull(studentCourses);
@@ -259,9 +341,14 @@ namespace AcmeSchoolProyect.Tests
             int age = 20;
             var studentId = _studentService.RegisterStudent(nameStudent, age);
             string nameCourse = "Informatica";
-            var courseId = _courseService.RegisterCourse(nameCourse);
-            _paymentCourseService.RegisterPaymentCourse(studentId);
-            var registrationCourseId = _registratrionCourseService.RegisterCourse(studentId, courseId);
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            var courseId = _courseService.RegisterCourse(nameCourse, courseCost, startDateCourse, endDateCourse);
+
+            int pay = 10;
+            var paymentCourseId = _paymentCourseService.RegisterPaymentCourse(studentId, courseId, pay);
+            var registrationCourseId = _registratrionCourseService.RegisterCourse(studentId);
             var registrationCourse = _registratrionCourseService.GetByIdRegisterCourse(registrationCourseId);
             Assert.Equal(registrationCourseId, registrationCourse.Id);
         }
@@ -273,9 +360,14 @@ namespace AcmeSchoolProyect.Tests
             int age = 20;
             var studentId = _studentService.RegisterStudent(nameStudent, age);
             string nameCourse = "Informatica";
-            var courseId = _courseService.RegisterCourse(nameCourse);
-            _paymentCourseService.RegisterPaymentCourse(studentId);
-            var registrationCourseId = _registratrionCourseService.RegisterCourse(studentId, courseId);
+            int courseCost = 10;
+            DateTime startDateCourse = DateTime.Now;
+            DateTime endDateCourse = DateTime.Now.AddMonths(3);
+            var courseId = _courseService.RegisterCourse(nameCourse, courseCost, startDateCourse, endDateCourse);
+
+            int pay = 10;
+            var paymentCourseId = _paymentCourseService.RegisterPaymentCourse(studentId, courseId, pay);
+            var registrationCourseId = _registratrionCourseService.RegisterCourse(studentId);
             var registrationCourse = _registratrionCourseService.GetByIdRegisterCourse(registrationCourseId);
             _registratrionCourseService.RemoveRegisterCourse(registrationCourse);
             var registerCourses = _registratrionCourseService.GetAllRegisterCourses();
